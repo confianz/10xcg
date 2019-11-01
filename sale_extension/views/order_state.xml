@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <!-- Tree View -->
+        <record id="order_state_tree_view" model="ir.ui.view">
+            <field name="name">order.state.tree</field>
+            <field name="model">order.state</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Order States">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Form View-->
+        <record id="order_state_form_view" model="ir.ui.view">
+            <field name="name">order.state.form</field>
+            <field name="model">order.state</field>
+            <field name="arch" type="xml">
+                <form string="Sale Order States">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_order_state" model="ir.actions.act_window">
+            <field name="name">Sales Order States</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">order.state</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_order_states"
+            name="Sale Order States"
+            action="action_order_state"
+            parent="sale.menu_sale_config"
+            sequence="3" groups ="sales_team.group_sale_salesman"/>
+
+    </data>
+</odoo>
