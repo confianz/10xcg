@@ -21,13 +21,17 @@ class GeneratePurchaseOrder(models.TransientModel):
                                 'qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
                                 'sale_line_id': line.id,
-                                'vendor_selector_ids' : [s.name.id for s in line.product_id.seller_ids] or [],
+                                'vendor_selector_ids' : [s.id for s in line.product_id.seller_ids] or [],
                                 })
                     )
                 res['line_ids'] = list_lines
                 res['sale_order_id'] = self._context.get('active_ids', 0)[0]
 
         return res
+
+
+
+
 
     def generate_rfq(self):
         """
@@ -40,14 +44,14 @@ class GeneratePurchaseOrder(models.TransientModel):
             for lines in rfq_lines:
                 vals = {
                     'company_id': record.sale_order_id.company_id.id,
-                    'partner_id': lines[0].vendor_id.id if lines[0].vendor_id else False,
+                    'partner_id': lines[0].vendor_id and lines[0].vendor_id.name and lines[0].vendor_id.name.id or False,
                     'order_line':[(0,0,{
                         'name': line.product_id.display_name,
                         'date_planned': fields.Datetime.now(),
                         'product_id': line.product_id.id,
                         'product_qty': line.qty,
                         'product_uom': line.product_uom.id,
-                        'price_unit': line.product_id.standard_price,
+                        'price_unit': line.vendor_price,
                         'company_id': record.sale_order_id.company_id.id,
                     }) for line in lines]
                 }
@@ -65,9 +69,16 @@ class GeneratePurchaseOrderLine(models.TransientModel):
     qty = fields.Float('Quantity')
     product_uom = fields.Many2one('uom.uom', string="Unit Of Measure")
     order_id = fields.Many2one('generate.purchase.order', string="Order")
-    vendor_id = fields.Many2one('res.partner', string='Vendor', domain=[('supplier', '=', True)], copy=False)
+    vendor_id = fields.Many2one('product.supplierinfo', string='Vendor', copy=False)
     sale_line_id = fields.Many2one('sale.order.line', string='Sale Order Line')
-    vendor_selector_ids = fields.Many2many('res.partner', string='Vendor Domain List', help='preset m2m field for domain forcing.')
+    vendor_selector_ids = fields.Many2many('product.supplierinfo', string='Vendor Domain List', help='preset m2m field for domain forcing.')
+    vendor_price = fields.Float(string='Vendor Price')
+
+    @api.onchange('vendor_id')
+    def onchange_vendor(self):
+        for line in self:
+            line.vendor_price = line.vendor_id.price
+
 
 GeneratePurchaseOrderLine()
 
