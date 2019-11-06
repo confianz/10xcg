@@ -8,6 +8,7 @@
             <field name="model">order.state</field>
             <field name="arch" type="xml">
                 <tree string="Sale Order States">
+                <field name="sequence" widget="handle"/>
                     <field name="name"/>
                     <field name="description"/>
                 </tree>
@@ -25,6 +26,7 @@
                             <group>
                                 <field name="name"/>
                                 <field name="description"/>
+                                <field name="sequence"/>
                             </group>
                             <group>
                             </group>

@@ -8,9 +8,6 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <field name="payment_term_id" position="after">
-                    <field name="order_state" groups ="sales_team.group_sale_salesman" widget="selection"/>
-                </field>
                 <xpath expr="//button[@name='action_view_invoice']" position="after">
                     <button name="action_request_for_quotation"
                             type="object"
@@ -24,11 +21,62 @@
                 <field name="state" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </field>
+                <field name="state" position="after">
+                        <field name="order_state" widget="statusbar" options="{'clickable': '1'}"/>
+                </field>
                 <xpath expr="//button[@name='action_cancel']" position="before">
                     <button name="%(action_generate_purchase_order)d" type="action" string="Generate RFQ"/>
                 </xpath>
             </field>
         </record>
+
+
+
+        <record id="quotation_tree_inherit_sale_extension" model="ir.ui.view">
+            <field name="name">quotation.tree.inherit.sale.extension</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                        <field name="order_state"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="order_tree_inherit_sale_extension" model="ir.ui.view">
+            <field name="name">order.tree.inherit.sale.extension</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                        <field name="order_state"/>
+                </field>
+            </field>
+        </record>
+
+
+
+
+
+
+
+        <record id="order_search_inherit_sale_extension" model="ir.ui.view">
+            <field name="name">order.search.inherit.sale.extension</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="order_state" string="Sale Order State"/>
+                </field>
+
+                <filter name="salesperson" position="before">
+                    <filter name="sale_state" string="Sale Order State" domain="[]" context="{'group_by': 'order_state'}"/>
+                </filter>
+            </field>
+        </record>
+
+
 
     </data>
 </odoo>

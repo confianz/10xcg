@@ -6,7 +6,13 @@ from odoo import _, api, fields, models
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    order_state = fields.Many2one('order.state', string='State', copy=False)
+
+    def _default_stage_id(self):
+        lowest_sequence_stage = self.env['order.state'].search([], order='sequence', limit=1)
+        return lowest_sequence_stage or False
+
+
+    order_state = fields.Many2one('order.state', string='State', copy=False, default=lambda self: self._default_stage_id())
     po_count = fields.Integer(string='# of RFQ', compute='get_po_ids', readonly=True, store=True, copy=False)
 
     @api.depends('order_line.purchase_order_id')

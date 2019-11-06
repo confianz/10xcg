@@ -7,8 +7,12 @@ class OrderState(models.Model):
     _name = "order.state"
     _description = "Sale Order State"
 
+    _order = "sequence, name, id"
+
+
     name = fields.Char(string='State', required=True)
     description = fields.Char(string='Description')
+    sequence = fields.Integer(string='Sequence', default=10)
 
 OrderState()
 
