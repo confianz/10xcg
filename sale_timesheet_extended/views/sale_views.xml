@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+
+    <record id="sale_view_form_inherit_sale_timesheet" model="ir.ui.view">
+        <field name='name'>sale.form.inherit.timesheet</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+
+                <xpath expr="//notebook/page[@name='order_lines']" position="after">
+                    <page string="Timesheets" groups="hr_timesheet.group_hr_timesheet_user">
+                        <field name='order_timesheet_ids' mode="tree,kanban" groups="hr_timesheet.group_hr_timesheet_user">
+                            <tree editable="bottom" string="Timesheet Activities" default_order="date">
+                                <field name="date"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="employee_id" required="1"/>
+                                <field name="project_id" invisible="0"/>
+                                <field name="name"/>
+                                <field name="unit_amount" sum="Total hours" widget="timesheet_uom"/>
+                                <field name="task_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                            </tree>
+                            <form  string="Timesheet Activities">
+                                <sheet>
+                                    <group>
+                                        <field name="date"/>
+                                        <field name="user_id" invisible="1"/>
+                                        <field name="employee_id" required="1"/>
+                                        <field name="project_id" invisible="0"/>
+                                        <field name="name"/>
+                                        <field name="unit_amount" string="Duration" widget="float_time"/>
+                                        <field name="company_id" invisible="1"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>
