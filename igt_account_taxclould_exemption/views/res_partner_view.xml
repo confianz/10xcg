@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Tax Exception Certificate">
+                    <field name="tax_exception_certificate_ids">
+                        <tree>
+                            <field name="certificate_id"/>
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group col="4">
+                                    <field name="res_id" invisible="1"/>
+                                    <field name="certificate_id" required="1"/>
+                                </group>
+                                <notebook>
+                                    <page string="Exempt States">
+                                        <field name="exempt_states_ids">
+                                            <tree editable="bottom">
+                                                <field name="identification_number" required="1"/>
+                                                <field name="reason_for_exemption" required="1"/>
+                                                <field name="state_abbr_id" required="1"/>
+                                                <field name="account_tax_certificate_id" invisible="1"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    <page string="Purchaser Details">
+                                        <field name="purchaser_ids">
+                                            <tree>
+                                                <field name="purchaser_first_name"/>
+                                                <field name="purchaser_business_type"/>
+                                                <field name="purchaser_exemption_reason"/>
+                                                <field name="id_number"/>
+                                                <field name="state_of_issue_id"/>
+                                                <field name="tax_type"/>
+                                            </tree>
+                                            <form>
+                                                <sheet>
+                                                    <group col="4">
+                                                        <field name="purchaser_first_name" required="1"/>
+                                                        <field name="purchaser_last_name" required="1"/>
+                                                        <field name="purchaser_state" required="1"/>
+                                                        <field name="purchaser_title" required="1"/>
+                                                        <field name="purchaser_zip" required="1"/>
+                                                        <field name="purchaser_address1" required="1"/>
+                                                        <field name="purchaser_address2" required="1"/>
+                                                        <field name="purchaser_city" required="1"/>
+                                                    </group>
+                                                    <group col="4">
+                                                        <field name="purchaser_business_type" required="1"/>
+                                                        <field name="purchaser_business_type_other_value"
+                                                               attrs="{'required': [('purchaser_business_type', '=', 'Other')]}"/>
+                                                        <field name="purchaser_exemption_reason" required="1"/>
+                                                        <field name="purchaser_exemption_reason_other_value"
+                                                               attrs="{'required': [('purchaser_exemption_reason', '=', 'Other')]}"/>
+                                                    </group>
+                                                    <notebook>
+                                                        <page string="Purchase Tax ID">
+                                                            <group col="4">
+                                                                <field name="id_number" required="1"/>
+                                                                <field name="state_of_issue_id" required="1"/>
+                                                                <field name="tax_type" required="1"/>
+                                                            </group>
+                                                        </page>
+                                                    </notebook>
+                                                </sheet>
+                                            </form>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

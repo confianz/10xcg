@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_account_tax_certificate,account.tax.certificate,model_account_tax_certificate,base.group_system,1,1,1,1
+access_exempt_states,access.exempt.states,model_exempt_states,base.group_system,1,1,1,1
+access_purchaser_details,access.purchaser.details,model_purchaser_details,base.group_system,1,1,1,1
