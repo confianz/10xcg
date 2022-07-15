@@ -8,7 +8,7 @@
     'description': """Adds a new field in the chart account to check whether it is a tax account and also autofills the account during tax creation.""",
     'depends': ['base', 'account'],
     'data': [
-        'views/chart_of_account.xml',
+        
     ],
     'demo': [],
     'application': True,
