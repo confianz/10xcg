@@ -5,9 +5,9 @@
         <field name="model">account.account</field>
         <field name="inherit_id" ref="account.view_account_list"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='group_id']" position="before">
+            <field name="group_id" position="before">
                 <field name="is_account_tax"/>
-            </xpath>
+            </field>
         </field>
     </record>
 
