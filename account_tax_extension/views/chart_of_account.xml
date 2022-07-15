@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_view_account_list_extend" model="ir.ui.view">
+        <field name="name">account.account.account_tax</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='group_id']" position="before">
+                <field name="is_account_tax"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
